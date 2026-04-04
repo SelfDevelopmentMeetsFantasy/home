@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "Subscriber": {
+      "title": "Subscriber",
+      "description": "A user who has signed up for the newsletter.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The subscriber's email address."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the user subscribed."
+        }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A contact message from a user.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The sender's name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The sender's email address."
+        },
+        "subject": {
+          "type": "string",
+          "description": "The message subject."
+        },
+        "message": {
+          "type": "string",
+          "description": "The message content."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the message was sent."
+        }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/subscribers/{subscriberId}": {
+      "schema": "Subscriber",
+      "description": "Collection of newsletter subscribers."
+    },
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Collection of contact messages."
+    }
+  }
+}

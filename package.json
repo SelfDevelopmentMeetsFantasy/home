@@ -1,0 +1,27 @@
+{
+  "name": "home",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^1.45.0",
+    "firebase": "^12.11.0",
+    "lucide-react": "^0.454.0",
+    "motion": "^12.38.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  }
+}
