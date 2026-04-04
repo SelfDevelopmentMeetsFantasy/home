@@ -1,22 +1,22 @@
-# Deploying to Vercel
+# Deploying to GitHub Pages
 
-Follow these steps to make your website publicly available:
+Follow these steps to make your website publicly available on GitHub:
 
-### 1. Prepare your Repository
-- Create a new repository on [GitHub](https://github.com).
-- Push all project files to the repository.
+### 1. Export to GitHub
+- Click on the **Settings** (gear icon) in the top-right corner of the AI Studio interface.
+- Select **Export to GitHub**.
+- Follow the prompts to connect your GitHub account and create a new repository for this project.
 
-### 2. Connect to Vercel
-- Log in to your [Vercel](https://vercel.com) account.
-- Click **"Add New"** > **"Project"**.
-- Select your GitHub repository from the list and click **"Import"**.
+### 2. Enable GitHub Pages
+- In your GitHub repository, go to **Settings** > **Pages**.
+- Under **Build and deployment**, set the **Source** to "GitHub Actions".
+- The included `.github/workflows/deploy.yml` will automatically build and deploy your site whenever you push to the `main` branch.
 
-### 3. Build and Deploy
-- Vercel will automatically detect the **Vite** configuration.
-- Ensure the **Framework Preset** is set to **Vite**.
-- The **Build Command** should be `npm run build`.
-- The **Output Directory** should be `dist`.
-- Click **"Deploy"**.
+### 3. Custom Domain (Optional)
+- If you have a custom domain, add it in the GitHub Pages settings.
+- Ensure your `vite.config.ts` has `base: '/'` for custom domains.
 
-### Important Note
-- The project structure uses a standard `src/` layout for optimal compatibility with Vercel and other modern hosting platforms.
+---
+
+# Deploying to Vercel (Alternative)
+... (rest of the file)

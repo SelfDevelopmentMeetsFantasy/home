@@ -8,7 +8,9 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env': env
     },
-    base: '/',
+    // If you are deploying to username.github.io/repo-name/, 
+    // set base to '/repo-name/'. For custom domains, keep it as '/'.
+    base: process.env.NODE_ENV === 'production' ? './' : '/',
     build: {
       outDir: 'dist',
       emptyOutDir: true,
