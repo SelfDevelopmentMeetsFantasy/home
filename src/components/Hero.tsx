@@ -5,7 +5,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 export const Hero: React.FC = () => {
   const scrollToBooks = (e: React.MouseEvent) => {
     e.preventDefault();
-    const element = document.getElementById('books');
+    const element = document.getElementById('happiness');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
           
           <div className="flex flex-col sm:flex-row justify-center items-center gap-6 animate-fade-in-up pt-4" style={{ animationDelay: '0.3s' }}>
             <a 
-              href="#books" 
+              href="#happiness" 
               onClick={scrollToBooks}
               className="group w-full sm:w-auto flex items-center justify-center space-x-3 bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 active:scale-95"
             >

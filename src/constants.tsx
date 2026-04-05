@@ -10,25 +10,16 @@ import incompleteVersesImg from './assets/images/incomplete-verses.jpg';
 import versosIncompletosImg from './assets/images/versos-incompletos.jpg';
 import happierDecisionsLogoImg from './assets/images/happier-decisions-logo.jpg';
 import fit4gymiLogoImg from './assets/images/fit4gymi-logo.jpg';
+import happierBundleImg from './assets/images/happier-bundle.jpg';
+
+// To add local screenshots:
+// 1. Place your screenshot images in src/assets/images/
+// 2. Import them here like: import happierScreenshot from './assets/images/happier-screenshot.jpg';
+// 3. Add them to the PROJECTS array using the localScreenshotUrl property.
 
 export const AUTHOR_STORE_LINK = 'https://www.amazon.com/stores/author/B0GDGXQGQS/allbooks';
 
 export const BOOKS: Book[] = [
-  {
-    id: 'hopping-for-happiness',
-    title: 'Hopping for Happiness',
-    subtitle: 'Self Development',
-    description: 'The definitive guide to the Happier Decisions framework. Master the art of well-being through intentional movement and cognitive shifts designed to transform long-term happiness into a daily reality.',
-    bookstoreLinks: [
-      { name: 'Amazon', url: 'https://www.amazon.com/Hopping-Happiness-framework-smarter-decisions-ebook/dp/B0GRWSS34N' },
-      { name: 'Walmart', url: 'https://www.walmart.com/ip/Hopping-for-Happiness-a-simple-framework-for-smarter-happier-decisions-Paperback-9798251663341/19815466558' },
-      { name: 'Bol.com', url: 'https://www.bol.com/be/nl/p/hopping-for-happiness-a-simple-framework-for-smarter-happier-decisions/9300000268435252/' }
-    ],
-    amazonLink: 'https://www.amazon.com/Hopping-Happiness-framework-smarter-decisions-ebook/dp/B0GRWSS34N',
-    imageUrl: 'https://m.media-amazon.com/images/I/719hZ9y6X8L._SL1500_.jpg',
-    localImageUrl: hoppingForHappinessImg,
-    status: 'Published'
-  },
   {
     id: 'thousandfold-tide',
     title: 'The Thousandfold Tide',
@@ -43,6 +34,7 @@ export const BOOKS: Book[] = [
     imageUrl: 'https://m.media-amazon.com/images/P/B0GM7D96JK.01._SCLZZZZZZZ_.jpg',
     tiktokLink: 'https://www.tiktok.com/@booksbyeja/video/7609782415485193494',
     localImageUrl: thousandfoldTideImg,
+    reviewLink: 'https://booksprout.co/reviewer/review-copy/view/265868/the-thousandfold-tide',
     status: 'Published'
   },
   {
@@ -80,13 +72,20 @@ export const BOOKS: Book[] = [
 export const PROJECTS: AppProject[] = [
   {
     id: 'happier-decisions',
-    name: 'Happier Decisions',
-    tagline: 'Science-backed choice optimization.',
-    description: 'The companion app to Hopping for Happiness with voice input, private data, and instant scoring — your 24/7 advisor that never sleeps or judges',
+    name: 'Hopping for Happiness and Happier Decisions',
+    tagline: 'Read the Book, Use the App, Transform Your Life',
+    description: 'A Simple Framework for Smarter, Happier Decisions. With a powerful AI Copilot to guide you through',
     status: 'Published',
-    platform: 'App Store',
+    platform: 'App Store & Bookstore',
     link: 'https://apps.apple.com/app/happier-decisions/id6759266086',
+    bookstoreLinks: [
+      { name: 'Amazon', url: 'https://www.amazon.com/Hopping-Happiness-framework-smarter-decisions-ebook/dp/B0GRWSS34N' },
+      { name: 'Walmart', url: 'https://www.walmart.com/ip/Hopping-for-Happiness-a-simple-framework-for-smarter-happier-decisions-Paperback-9798251663341/19815466558' },
+      { name: 'Bol.com', url: 'https://www.bol.com/be/nl/p/hopping-for-happiness-a-simple-framework-for-smarter-happier-decisions/9300000268435252/' }
+    ],
+    reviewLink: 'https://booksprout.co/reviewer/review-copy/view/269333/hopping-for-happiness-a-simple-framework-for-smarter-happier-decisions',
     localImageUrl: happierDecisionsLogoImg,
+    localScreenshotUrl: happierBundleImg,
     icon: 'BrainCircuit',
     featured: true
   },
@@ -99,6 +98,7 @@ export const PROJECTS: AppProject[] = [
     platform: 'App Store',
     link: 'https://apps.apple.com/app/fit4gymi/id6759988048',
     localImageUrl: fit4gymiLogoImg,
+    screenshotUrl: 'https://picsum.photos/seed/gymi/1200/675',
     icon: 'GraduationCap'
   }
 ];

@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Book } from '../types';
-import { ArrowUpRight, BookOpen, Video, Clock, ChevronDown, ShoppingCart } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Video, Clock, ChevronDown, ShoppingCart, Sparkles } from 'lucide-react';
 import { ShareButton } from './ShareButton';
 
 interface BookCardProps {
@@ -143,6 +143,18 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
             >
               <Video size={12} className="text-slate-400" />
               <span>Watch Preview</span>
+            </a>
+          )}
+
+          {book.reviewLink && (
+            <a 
+              href={book.reviewLink} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center space-x-1.5 bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-2 rounded-lg text-[11px] font-bold hover:bg-indigo-100 transition-all active:scale-95"
+            >
+              <Sparkles size={12} className="text-indigo-500" />
+              <span>FREE reader copies for honest feedback</span>
             </a>
           )}
         </div>

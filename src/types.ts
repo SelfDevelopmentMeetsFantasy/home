@@ -14,6 +14,7 @@ export interface Book {
   tiktokLink?: string;
   imageUrl?: string;
   localImageUrl?: string;
+  reviewLink?: string;
   status?: 'Published' | 'In Progress';
 }
 
@@ -25,10 +26,14 @@ export interface AppProject {
   status: 'Published' | 'In Progress' | 'Beta';
   platform: string;
   link?: string;
+  bookstoreLinks?: BookstoreLink[];
+  reviewLink?: string;
   icon: string;
   logo?: string;
   logoUrl?: string;
   localImageUrl?: string;
+  screenshotUrl?: string;
+  localScreenshotUrl?: string;
   featured?: boolean;
 }
 

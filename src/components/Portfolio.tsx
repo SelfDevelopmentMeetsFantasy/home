@@ -11,10 +11,10 @@ interface PortfolioProps {
 }
 
 export const Portfolio: React.FC<PortfolioProps> = ({ onShowHappierPrivacy, onShowFit4GymiPrivacy }) => {
-  // Happiness Section: Happier Decisions (app) and Hopping for Happiness (book)
+  // Happiness Section: Happier Decisions (combined app and book)
   const happinessItems = {
     apps: PROJECTS.filter(p => p.id === 'happier-decisions'),
-    books: BOOKS.filter(b => b.id === 'hopping-for-happiness')
+    books: []
   };
 
   // Gymivorbereitung Section: Fit4Gymi (app)
@@ -52,9 +52,6 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onShowHappierPrivacy, onSh
                 index={idx} 
                 onShowHappierPrivacy={onShowHappierPrivacy}
               />
-            ))}
-            {happinessItems.books.map((book) => (
-              <BookCard key={book.id} book={book} />
             ))}
           </div>
         </div>

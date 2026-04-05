@@ -1,7 +1,7 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { AppProject } from '../types';
-import { ArrowUpRight, Clock, Shield, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Clock, Shield, Sparkles, Smartphone, ChevronDown, ShoppingCart } from 'lucide-react';
 import { ShareButton } from './ShareButton';
 import { fetchAppInfo, AppInfo } from '../services/gemini';
 
@@ -18,15 +18,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   onShowHappierPrivacy, 
   onShowFit4GymiPrivacy 
 }) => {
-  const [info, setInfo] = useState<AppInfo | null>(project.localImageUrl ? {
+  const [info, setInfo] = useState<AppInfo | null>(project.localImageUrl || project.localScreenshotUrl ? {
     logoUrl: project.localImageUrl,
+    screenshotUrl: project.localScreenshotUrl,
     tagline: project.tagline
-  } : project.logoUrl ? {
+  } : project.logoUrl || project.screenshotUrl ? {
     logoUrl: project.logoUrl,
+    screenshotUrl: project.screenshotUrl,
     tagline: project.tagline
   } : null);
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [screenshotError, setScreenshotError] = useState(false);
+  const [showBookstores, setShowBookstores] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleImageError = () => {
     if (info?.logoUrl === project.localImageUrl && project.link?.includes('apps.apple.com')) {
@@ -42,6 +47,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       setHasError(true);
     }
   };
+
+  const handleScreenshotError = () => {
+    setScreenshotError(true);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowBookstores(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (info?.logoUrl && info.logoUrl !== project.localImageUrl) return;
@@ -70,13 +89,36 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <div 
-      className={`group flex flex-col h-full p-5 rounded-2xl border transition-all duration-300 ${
+      className={`group flex flex-col h-full rounded-2xl border transition-all duration-300 overflow-hidden ${
         project.featured 
           ? 'bg-white border-indigo-100 shadow-lg shadow-indigo-100/50' 
           : 'bg-white border-slate-200 hover:border-indigo-200 hover:shadow-md'
       }`}
     >
-      <div className="flex-grow space-y-3 flex flex-col">
+      {/* Screenshot Section */}
+      <div className="aspect-video w-full bg-slate-100 overflow-hidden relative">
+        {info?.screenshotUrl && !screenshotError ? (
+          <img 
+            src={info.screenshotUrl} 
+            alt={`${project.name} screenshot`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            referrerPolicy="no-referrer"
+            onError={handleScreenshotError}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-50">
+            <Smartphone size={48} className="text-slate-200" />
+          </div>
+        )}
+        {project.featured && (
+          <div className="absolute top-3 left-3 bg-indigo-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg flex items-center space-x-1">
+            <Sparkles size={10} />
+            <span>Featured App</span>
+          </div>
+        )}
+      </div>
+
+      <div className="p-5 flex-grow space-y-3 flex flex-col">
         <div className="flex items-start justify-between">
           <div className={`overflow-hidden rounded-xl p-0.5 ${project.featured ? 'bg-indigo-50' : 'bg-slate-50'}`}>
             {loading ? (
@@ -165,7 +207,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.description}
         </p>
 
-        <div className="pt-3 space-y-1.5">
+        <div className="pt-3 space-y-1.5 relative" ref={dropdownRef}>
           <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest text-center mb-1">{project.platform}</p>
           
           {project.link ? (
@@ -182,6 +224,54 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <div className="w-full inline-flex items-center justify-center space-x-1.5 bg-slate-100 text-slate-400 px-3 py-2 rounded-lg text-[11px] font-bold cursor-not-allowed">
                <span>Coming Soon</span>
             </div>
+          )}
+
+          {project.bookstoreLinks && project.bookstoreLinks.length > 0 && (
+            <div className="relative">
+              <button 
+                onClick={() => setShowBookstores(!showBookstores)}
+                className="w-full inline-flex items-center justify-center space-x-1.5 bg-white text-slate-900 border border-slate-200 px-3 py-2 rounded-lg text-[11px] font-bold hover:bg-slate-50 transition-all shadow-sm active:scale-95"
+              >
+                <ShoppingCart size={12} />
+                <span>Get the Book</span>
+                <ChevronDown size={12} className={`transition-transform duration-200 ${showBookstores ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showBookstores && (
+                <div className="absolute bottom-full left-0 w-full mb-2 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-20 animate-in fade-in slide-in-from-bottom-2 duration-200">
+                  <div className="p-2 bg-slate-50 border-b border-slate-100">
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest text-center">Select Store</p>
+                  </div>
+                  <div className="p-1">
+                    {project.bookstoreLinks.map((link) => (
+                      <a
+                        key={link.name}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between px-3 py-2 rounded-lg text-[11px] font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                        onClick={() => setShowBookstores(false)}
+                      >
+                        <span>{link.name}</span>
+                        <ArrowUpRight size={10} className="opacity-50" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {project.reviewLink && (
+            <a 
+              href={project.reviewLink} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center space-x-1.5 bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-2 rounded-lg text-[11px] font-bold hover:bg-indigo-100 transition-all active:scale-95"
+            >
+              <Sparkles size={12} className="text-indigo-500" />
+              <span>FREE reader copies for honest feedback</span>
+            </a>
           )}
 
           {(onShowHappierPrivacy || onShowFit4GymiPrivacy) && (
