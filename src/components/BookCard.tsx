@@ -1,18 +1,20 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { BOOKS, AUTHOR_STORE_LINK } from '../constants';
-import { ExternalLink, ArrowUpRight, BookOpen, Video, Clock, ChevronDown, ShoppingCart, Share2 } from 'lucide-react';
+import { Book } from '../types';
+import { ArrowUpRight, BookOpen, Video, Clock, ChevronDown, ShoppingCart } from 'lucide-react';
 import { ShareButton } from './ShareButton';
 
-const BookCard: React.FC<{ book: typeof BOOKS[0] }> = ({ book }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+interface BookCardProps {
+  book: Book;
+}
+
+export const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const [hasError, setHasError] = useState(false);
   const [imgSrc, setImgSrc] = useState(book.localImageUrl || book.imageUrl);
   const [showBookstores, setShowBookstores] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleImageError = () => {
-    // If local image fails, try the external one
     if (imgSrc === book.localImageUrl && book.imageUrl) {
       setImgSrc(book.imageUrl);
     } else {
@@ -37,13 +39,12 @@ const BookCard: React.FC<{ book: typeof BOOKS[0] }> = ({ book }) => {
           <img 
             src={imgSrc} 
             alt={book.title} 
-            className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
             referrerPolicy="no-referrer"
-            onLoad={() => setIsLoaded(true)}
             onError={handleImageError}
           />
         ) : null}
-        {(!isLoaded || hasError) && (
+        {hasError && (
           <div className="absolute inset-0 bg-slate-100 flex items-center justify-center">
             <BookOpen size={48} className="text-slate-300" />
           </div>
@@ -147,38 +148,5 @@ const BookCard: React.FC<{ book: typeof BOOKS[0] }> = ({ book }) => {
         </div>
       </div>
     </div>
-  );
-};
-
-export const Books: React.FC = () => {
-  return (
-    <section id="books" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 border-b border-slate-100 pb-12">
-          <div className="max-w-2xl">
-            <h2 className="serif text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Published Works</h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              Explore the literary landscape of Eduardo J. Aleman, from atmospheric novellas 
-              to surrealist poetry.
-            </p>
-          </div>
-          <a 
-            href={AUTHOR_STORE_LINK} 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center space-x-2 bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl font-bold hover:bg-indigo-100 transition-all active:scale-95 text-xs"
-          >
-            <span>Visit Amazon Store</span>
-            <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {BOOKS.map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 };

@@ -1,21 +1,23 @@
 
 import React, { useEffect, useState } from 'react';
-import { PROJECTS } from '../constants';
-import { ArrowUpRight, Clock, Shield, Sparkles, Smartphone, Share2 } from 'lucide-react';
+import { AppProject } from '../types';
+import { ArrowUpRight, Clock, Shield, Sparkles } from 'lucide-react';
 import { ShareButton } from './ShareButton';
 import { fetchAppInfo, AppInfo } from '../services/gemini';
 
-interface AppsProps {
-  onShowHappierPrivacy: () => void;
-  onShowFit4GymiPrivacy: () => void;
+interface ProjectCardProps {
+  project: AppProject;
+  index: number;
+  onShowHappierPrivacy?: () => void;
+  onShowFit4GymiPrivacy?: () => void;
 }
 
-const ProjectCard: React.FC<{ 
-  project: typeof PROJECTS[0], 
-  index: number,
-  onShowHappierPrivacy: () => void, 
-  onShowFit4GymiPrivacy: () => void 
-}> = ({ project, index, onShowHappierPrivacy, onShowFit4GymiPrivacy }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ 
+  project, 
+  index, 
+  onShowHappierPrivacy, 
+  onShowFit4GymiPrivacy 
+}) => {
   const [info, setInfo] = useState<AppInfo | null>(project.localImageUrl ? {
     logoUrl: project.localImageUrl,
     tagline: project.tagline
@@ -24,11 +26,9 @@ const ProjectCard: React.FC<{
     tagline: project.tagline
   } : null);
   const [loading, setLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   const handleImageError = () => {
-    // If local logo fails, try to fetch from store if applicable
     if (info?.logoUrl === project.localImageUrl && project.link?.includes('apps.apple.com')) {
       setLoading(true);
       fetchAppInfo(project.link).then(data => {
@@ -44,7 +44,6 @@ const ProjectCard: React.FC<{
   };
 
   useEffect(() => {
-    // If we already have info (from hardcoded or previous fetch), don't fetch again
     if (info?.logoUrl && info.logoUrl !== project.localImageUrl) return;
 
     const link = project.link;
@@ -55,16 +54,16 @@ const ProjectCard: React.FC<{
           setInfo(data);
           setLoading(false);
         }).catch(() => setLoading(false));
-      }, index * 1000); // 1 second stagger
+      }, index * 1000);
       return () => clearTimeout(timer);
     }
   }, [project.link, project.logoUrl, project.localImageUrl, index]);
 
   const handlePrivacyClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (project.id === 'happier-decisions') {
+    if (project.id === 'happier-decisions' && onShowHappierPrivacy) {
       onShowHappierPrivacy();
-    } else if (project.id === 'fit4gymi') {
+    } else if (project.id === 'fit4gymi' && onShowFit4GymiPrivacy) {
       onShowFit4GymiPrivacy();
     }
   };
@@ -90,13 +89,12 @@ const ProjectCard: React.FC<{
                   <img 
                     src={info.logoUrl} 
                     alt={project.name} 
-                    className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    className="w-full h-full object-cover transition-opacity duration-300"
                     referrerPolicy="no-referrer"
-                    onLoad={() => setIsLoaded(true)}
                     onError={handleImageError}
                   />
                 ) : null}
-                {(!isLoaded || hasError) && (
+                {hasError && (
                   <div className="absolute inset-0 bg-slate-50 flex items-center justify-center p-2">
                     {project.id === 'happier-decisions' ? (
                       <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -114,11 +112,6 @@ const ProjectCard: React.FC<{
                         <circle cx="85" cy="50" r="5" fill="#7c83fd" />
                       </svg>
                     )}
-                  </div>
-                )}
-                {!(info.logoUrl === project.localImageUrl) && (
-                  <div className="absolute bottom-0 right-0 bg-indigo-600 p-0.5 rounded-tl-md">
-                    <Sparkles size={6} className="text-white" />
                   </div>
                 )}
               </div>
@@ -191,45 +184,17 @@ const ProjectCard: React.FC<{
             </div>
           )}
 
-          <button 
-            onClick={handlePrivacyClick}
-            className="w-full flex items-center justify-center space-x-1 text-[10px] text-slate-400 hover:text-indigo-600 transition-colors py-1"
-          >
-            <Shield size={10} />
-            <span>Privacy Policy & Terms of Use</span>
-          </button>
+          {(onShowHappierPrivacy || onShowFit4GymiPrivacy) && (
+            <button 
+              onClick={handlePrivacyClick}
+              className="w-full flex items-center justify-center space-x-1 text-[10px] text-slate-400 hover:text-indigo-600 transition-colors py-1"
+            >
+              <Shield size={10} />
+              <span>Privacy Policy & Terms of Use</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
-  );
-};
-
-export const Apps: React.FC<AppsProps> = ({ onShowHappierPrivacy, onShowFit4GymiPrivacy }) => {
-  return (
-    <section id="apps" className="py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 border-b border-slate-200 pb-12">
-          <div className="max-w-2xl">
-            <h2 className="serif text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Digital Ecosystem</h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              Interactive solutions born from deep research and modern AI. 
-              From decision-making frameworks to educational coaching.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PROJECTS.map((project, index) => (
-            <ProjectCard 
-              key={project.id} 
-              project={project} 
-              index={index}
-              onShowHappierPrivacy={onShowHappierPrivacy} 
-              onShowFit4GymiPrivacy={onShowFit4GymiPrivacy} 
-            />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 };

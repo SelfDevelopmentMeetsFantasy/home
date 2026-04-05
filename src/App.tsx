@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { Books } from './components/Books';
-import { Apps } from './components/Apps';
+import { Portfolio } from './components/Portfolio';
 import { Newsletter } from './components/Newsletter';
 import { Playlist } from './components/Playlist';
 import { Contact } from './components/Contact';
@@ -26,8 +25,7 @@ const App: React.FC = () => {
         {view === 'home' && (
           <>
             <Hero />
-            <Books />
-            <Apps 
+            <Portfolio 
               onShowHappierPrivacy={() => setView('happier-privacy')}
               onShowFit4GymiPrivacy={() => setView('fit4gymi-privacy')}
             />
