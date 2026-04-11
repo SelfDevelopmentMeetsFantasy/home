@@ -20,35 +20,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   onShowFit4GymiPrivacy,
   isWide = false
 }) => {
-  const [info, setInfo] = useState<AppInfo | null>(project.localImageUrl || project.localScreenshotUrl ? {
-    logoUrl: project.localImageUrl,
-    screenshotUrl: project.localScreenshotUrl,
-    tagline: project.tagline
-  } : project.logoUrl || project.screenshotUrl ? {
-    logoUrl: project.logoUrl,
-    screenshotUrl: project.screenshotUrl,
-    tagline: project.tagline
-  } : null);
+  const [info, setInfo] = useState<AppInfo | null>(null);
   const [loading, setLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const [screenshotError, setScreenshotError] = useState(false);
   const [showBookstores, setShowBookstores] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const handleImageError = () => {
-    if (info?.logoUrl === project.localImageUrl && project.link?.includes('apps.apple.com')) {
-      setLoading(true);
-      fetchAppInfo(project.link).then(data => {
-        setInfo(data);
-        setLoading(false);
-      }).catch(() => {
-        setLoading(false);
-        setHasError(true);
-      });
-    } else {
-      setHasError(true);
-    }
-  };
 
   const handleScreenshotError = () => {
     setScreenshotError(true);
@@ -65,25 +41,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   }, []);
 
   useEffect(() => {
-    if (info?.logoUrl && info.logoUrl !== project.localImageUrl) return;
+    // Skip fetching if we already have a local screenshot
+    if (project.localScreenshotUrl) return;
 
     const link = project.link;
     if (link && link.includes('apps.apple.com') && !info && !loading) {
       const timer = setTimeout(() => {
         setLoading(true);
         fetchAppInfo(link).then(data => {
-          setInfo(prev => ({
-            ...data,
-            logoUrl: project.localImageUrl || data.logoUrl,
-            screenshotUrl: project.localScreenshotUrl || data.screenshotUrl,
-            tagline: data.tagline || prev?.tagline || project.tagline
-          }));
+          setInfo(data);
           setLoading(false);
         }).catch(() => setLoading(false));
       }, index * 1000);
       return () => clearTimeout(timer);
     }
-  }, [project.link, project.logoUrl, project.localImageUrl, index]);
+  }, [project.link, project.localScreenshotUrl, index]);
 
   const handlePrivacyClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -93,6 +65,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       onShowFit4GymiPrivacy();
     }
   };
+
+  const displayScreenshot = project.localScreenshotUrl || info?.screenshotUrl;
+  const displayTagline = project.tagline || info?.tagline;
 
   return (
     <div 
@@ -104,12 +79,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     >
       {/* Screenshot Section */}
       <div className={`${isWide ? 'lg:w-3/5' : 'w-full'} ${!isWide && project.id === 'fit4gymi' ? 'aspect-[2/3]' : 'aspect-video'} bg-slate-100 overflow-hidden relative ${project.id === 'fit4gymi' ? 'p-4 lg:p-8' : ''}`}>
-        {info?.screenshotUrl && !screenshotError ? (
+        {displayScreenshot && !screenshotError ? (
           <img 
-            src={info.screenshotUrl} 
+            src={displayScreenshot} 
             alt={`${project.name} screenshot`}
             className={`w-full h-full ${project.id === 'fit4gymi' ? 'object-contain' : 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
             onError={handleScreenshotError}
+            referrerPolicy="no-referrer"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-slate-50">
@@ -125,62 +101,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
 
       <div className={`p-5 flex-grow space-y-3 flex flex-col ${isWide ? 'lg:w-2/5 lg:p-8' : ''}`}>
-        <div className="flex items-start justify-between">
-          <div className={`overflow-hidden rounded-xl p-0.5 ${project.featured ? 'bg-indigo-50' : 'bg-slate-50'}`}>
-            {loading ? (
-              <div className="w-12 h-12 bg-white animate-pulse rounded-lg flex items-center justify-center">
-                <Sparkles size={16} className="text-slate-200" />
-              </div>
-            ) : info?.logoUrl ? (
-              <div className="w-12 h-12 bg-white flex items-center justify-center rounded-lg shadow-sm overflow-hidden relative">
-                {info.logoUrl && !hasError ? (
-                  <img 
-                    src={info.logoUrl} 
-                    alt={project.name} 
-                    className="w-full h-full object-cover transition-opacity duration-300"
-                    onError={handleImageError}
-                  />
-                ) : null}
-                {hasError && (
-                  <div className="absolute inset-0 bg-slate-50 flex items-center justify-center p-2">
-                    {project.id === 'happier-decisions' ? (
-                      <svg viewBox="0 0 100 100" className="w-full h-full">
-                        <circle cx="50" cy="50" r="40" fill="white" stroke="#0f172a" strokeWidth="4" />
-                        <path d="M35,30 Q30,5 50,15 Q70,5 65,30" fill="white" stroke="#0f172a" strokeWidth="4" />
-                        <circle cx="40" cy="45" r="4" fill="#0f172a" />
-                        <circle cx="60" cy="45" r="4" fill="#0f172a" />
-                        <path d="M45,55 L55,55 L50,60 Z" fill="#0f172a" />
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 100 100" className="w-full h-full text-[#7c83fd]" fill="currentColor">
-                        <path d="M30,50 Q30,20 50,20 Q70,20 70,50 Q70,80 50,80 Q30,80 30,50" stroke="#7c83fd" strokeWidth="4" fill="none" />
-                        <rect x="15" y="45" width="70" height="10" rx="2" />
-                        <circle cx="15" cy="50" r="5" fill="#7c83fd" />
-                        <circle cx="85" cy="50" r="5" fill="#7c83fd" />
-                      </svg>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className={`w-12 h-12 p-2 flex items-center justify-center rounded-lg shadow-sm ${project.id === 'happier-decisions' ? 'bg-white' : 'bg-[#7c83fd]'}`}>
-                {project.id === 'happier-decisions' ? (
-                  <svg viewBox="0 0 100 100" className="w-full h-full">
-                    <circle cx="50" cy="50" r="40" fill="white" stroke="#0f172a" strokeWidth="4" />
-                    <path d="M35,30 Q30,5 50,15 Q70,5 65,30" fill="white" stroke="#0f172a" strokeWidth="4" />
-                    <circle cx="40" cy="45" r="4" fill="#0f172a" />
-                    <circle cx="60" cy="45" r="4" fill="#0f172a" />
-                    <path d="M45,55 L55,55 L50,60 Z" fill="#0f172a" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 100 100" className="w-full h-full text-white" fill="currentColor">
-                    <path d="M30,50 Q30,20 50,20 Q70,20 70,50 Q70,80 50,80 Q30,80 30,50" stroke="white" strokeWidth="4" fill="none" />
-                    <rect x="15" y="45" width="70" height="10" rx="2" />
-                  </svg>
-                )}
-              </div>
-            )}
-          </div>
+        <div className="flex items-center justify-between">
           <span className={`text-[9px] font-bold uppercase tracking-tighter px-2 py-0.5 rounded-full ${
             project.status === 'Published' 
               ? 'bg-green-100 text-green-700' 
@@ -197,7 +118,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               {project.name}
             </h3>
             <p className="text-indigo-600 font-bold text-[9px] uppercase tracking-wider mt-0.5">
-              {info?.tagline || project.tagline}
+              {displayTagline}
             </p>
           </div>
           <ShareButton 

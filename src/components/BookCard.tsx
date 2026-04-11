@@ -41,6 +41,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
             alt={book.title} 
             className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
             onError={handleImageError}
+            referrerPolicy="no-referrer"
           />
         ) : null}
         {hasError && (
