@@ -5,18 +5,6 @@ import { ArrowUpRight, Clock, Shield, Sparkles, Smartphone, ChevronDown, Shoppin
 import { ShareButton } from './ShareButton';
 import { fetchAppInfo, AppInfo } from '../services/gemini';
 
-const resolveAsset = (path: string | undefined) => {
-  if (!path) return undefined;
-  if (path.startsWith('http')) return path;
-  
-  // Use import.meta.env.BASE_URL for GitHub Pages subpath compatibility
-  const base = import.meta.env.BASE_URL || '/';
-  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
-  const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
-  
-  return `${normalizedBase}${normalizedPath}`;
-};
-
 interface ProjectCardProps {
   project: AppProject;
   index: number;
@@ -33,8 +21,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   isWide = false
 }) => {
   const [info, setInfo] = useState<AppInfo | null>(project.localImageUrl || project.localScreenshotUrl ? {
-    logoUrl: resolveAsset(project.localImageUrl),
-    screenshotUrl: resolveAsset(project.localScreenshotUrl),
+    logoUrl: project.localImageUrl,
+    screenshotUrl: project.localScreenshotUrl,
     tagline: project.tagline
   } : project.logoUrl || project.screenshotUrl ? {
     logoUrl: project.logoUrl,
@@ -48,7 +36,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleImageError = () => {
-    if (info?.logoUrl === resolveAsset(project.localImageUrl) && project.link?.includes('apps.apple.com')) {
+    if (info?.logoUrl === project.localImageUrl && project.link?.includes('apps.apple.com')) {
       setLoading(true);
       fetchAppInfo(project.link).then(data => {
         setInfo(data);
@@ -86,8 +74,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         fetchAppInfo(link).then(data => {
           setInfo(prev => ({
             ...data,
-            logoUrl: resolveAsset(project.localImageUrl) || data.logoUrl,
-            screenshotUrl: resolveAsset(project.localScreenshotUrl) || data.screenshotUrl,
+            logoUrl: project.localImageUrl || data.logoUrl,
+            screenshotUrl: project.localScreenshotUrl || data.screenshotUrl,
             tagline: data.tagline || prev?.tagline || project.tagline
           }));
           setLoading(false);

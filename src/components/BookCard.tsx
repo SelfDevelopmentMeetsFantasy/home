@@ -4,30 +4,18 @@ import { Book } from '../types';
 import { ArrowUpRight, BookOpen, Video, Clock, ChevronDown, ShoppingCart, Sparkles } from 'lucide-react';
 import { ShareButton } from './ShareButton';
 
-const resolveAsset = (path: string | undefined) => {
-  if (!path) return undefined;
-  if (path.startsWith('http')) return path;
-  
-  // Use import.meta.env.BASE_URL for GitHub Pages subpath compatibility
-  const base = import.meta.env.BASE_URL || '/';
-  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
-  const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
-  
-  return `${normalizedBase}${normalizedPath}`;
-};
-
 interface BookCardProps {
   book: Book;
 }
 
 export const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const [hasError, setHasError] = useState(false);
-  const [imgSrc, setImgSrc] = useState(resolveAsset(book.localImageUrl) || book.imageUrl);
+  const [imgSrc, setImgSrc] = useState(book.localImageUrl || book.imageUrl);
   const [showBookstores, setShowBookstores] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleImageError = () => {
-    if (imgSrc === resolveAsset(book.localImageUrl) && book.imageUrl) {
+    if (imgSrc === book.localImageUrl && book.imageUrl) {
       setImgSrc(book.imageUrl);
     } else {
       setHasError(true);
