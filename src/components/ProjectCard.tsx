@@ -72,7 +72,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       const timer = setTimeout(() => {
         setLoading(true);
         fetchAppInfo(link).then(data => {
-          setInfo(data);
+          setInfo(prev => ({
+            ...data,
+            logoUrl: project.localImageUrl || data.logoUrl,
+            screenshotUrl: project.localScreenshotUrl || data.screenshotUrl,
+            tagline: data.tagline || prev?.tagline || project.tagline
+          }));
           setLoading(false);
         }).catch(() => setLoading(false));
       }, index * 1000);
@@ -98,13 +103,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       }`}
     >
       {/* Screenshot Section */}
-      <div className={`${isWide ? 'lg:w-3/5' : 'w-full'} aspect-video bg-slate-100 overflow-hidden relative ${project.id === 'fit4gymi' ? 'p-4 lg:p-8' : ''}`}>
+      <div className={`${isWide ? 'lg:w-3/5' : 'w-full'} ${!isWide && project.id === 'fit4gymi' ? 'aspect-[2/3]' : 'aspect-video'} bg-slate-100 overflow-hidden relative ${project.id === 'fit4gymi' ? 'p-4 lg:p-8' : ''}`}>
         {info?.screenshotUrl && !screenshotError ? (
           <img 
             src={info.screenshotUrl} 
             alt={`${project.name} screenshot`}
             className={`w-full h-full ${project.id === 'fit4gymi' ? 'object-contain' : 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
-            referrerPolicy="no-referrer"
             onError={handleScreenshotError}
           />
         ) : (
@@ -134,7 +138,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                     src={info.logoUrl} 
                     alt={project.name} 
                     className="w-full h-full object-cover transition-opacity duration-300"
-                    referrerPolicy="no-referrer"
                     onError={handleImageError}
                   />
                 ) : null}

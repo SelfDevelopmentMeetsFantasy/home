@@ -74,14 +74,12 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onShowHappierPrivacy, onSh
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {gymiItems.apps.map((app, idx) => (
-              <div key={app.id} className="lg:col-span-2">
-                <ProjectCard 
-                  project={app} 
-                  index={idx} 
-                  onShowFit4GymiPrivacy={onShowFit4GymiPrivacy}
-                  isWide={true}
-                />
-              </div>
+              <ProjectCard 
+                key={app.id} 
+                project={app} 
+                index={idx} 
+                onShowFit4GymiPrivacy={onShowFit4GymiPrivacy}
+              />
             ))}
           </div>
         </div>

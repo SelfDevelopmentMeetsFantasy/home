@@ -40,7 +40,6 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
             src={imgSrc} 
             alt={book.title} 
             className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-            referrerPolicy="no-referrer"
             onError={handleImageError}
           />
         ) : null}
