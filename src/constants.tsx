@@ -3,6 +3,16 @@ import React from 'react';
 import { Book, AppProject } from './types';
 import { BookOpen, Smartphone, Zap, FlaskConical } from 'lucide-react';
 
+// Import images from assets to ensure they are correctly bundled for production
+import hoppingForHappinessImg from './assets/images/hopping-for-happiness.jpg';
+import thousandfoldTideImg from './assets/images/thousandfold-tide.jpg';
+import incompleteVersesImg from './assets/images/incomplete-verses.jpg';
+import versosIncompletosImg from './assets/images/versos-incompletos.jpg';
+import happierDecisionsLogoImg from './assets/images/happier-decisions-logo.jpg';
+import fit4gymiLogoImg from './assets/images/fit4gymi-logo.jpg';
+import happierBundleImg from './assets/images/happier-bundle.jpg';
+import fit4gymiScreenshot from './assets/images/fit4gymi-screenshot.png';
+
 // To add local screenshots:
 // 1. Place your screenshot images in src/assets/images/
 // 2. Import them here like: import happierScreenshot from './assets/images/happier-screenshot.jpg';
@@ -24,7 +34,7 @@ export const BOOKS: Book[] = [
     amazonLink: 'https://www.amazon.com/Thousandfold-Tide-Eduardo-J-Aleman/dp/B0GM7D96JK',
     imageUrl: 'https://m.media-amazon.com/images/P/B0GM7D96JK.01._SCLZZZZZZZ_.jpg',
     tiktokLink: 'https://www.tiktok.com/@booksbyeja/video/7609782415485193494',
-    localImageUrl: '/images/thousandfold-tide.jpg',
+    localImageUrl: thousandfoldTideImg,
     reviewLink: 'https://booksprout.co/reviewer/review-copy/view/265868/the-thousandfold-tide',
     status: 'Published'
   },
@@ -41,7 +51,7 @@ export const BOOKS: Book[] = [
     amazonLink: 'https://www.amazon.com/Incomplete-Verses-Other-Letters-Never-ebook/dp/B0GCXNLPR1',
     imageUrl: 'https://m.media-amazon.com/images/P/B0GCXNLPR1.01._SCLZZZZZZZ_.jpg',
     tiktokLink: 'https://www.tiktok.com/@booksbyeja/video/7598627853579832598',
-    localImageUrl: '/images/incomplete-verses.jpg',
+    localImageUrl: incompleteVersesImg,
     status: 'Published'
   },
   {
@@ -55,7 +65,7 @@ export const BOOKS: Book[] = [
     amazonLink: 'https://www.amazon.com/Versos-Incompletos-Cartas-Enviadas-Spanish-ebook/dp/B0G4JYFXSJ',
     imageUrl: 'https://m.media-amazon.com/images/P/B0G4JYFXSJ.01._SCLZZZZZZZ_.jpg',
     tiktokLink: 'https://www.tiktok.com/@booksbyeja/video/7599327762075159830',
-    localImageUrl: '/images/versos-incompletos.jpg',
+    localImageUrl: versosIncompletosImg,
     status: 'Published'
   }
 ];
@@ -75,8 +85,8 @@ export const PROJECTS: AppProject[] = [
       { name: 'Bol.com', url: 'https://www.bol.com/be/nl/p/hopping-for-happiness-a-simple-framework-for-smarter-happier-decisions/9300000268435252/' }
     ],
     reviewLink: 'https://booksprout.co/reviewer/review-copy/view/269333/hopping-for-happiness-a-simple-framework-for-smarter-happier-decisions',
-    localImageUrl: '/images/happier-decisions-logo.jpg',
-    localScreenshotUrl: '/images/happier-bundle.jpg',
+    localImageUrl: happierDecisionsLogoImg,
+    localScreenshotUrl: happierBundleImg,
     icon: 'BrainCircuit',
     featured: true
   },
@@ -88,8 +98,8 @@ export const PROJECTS: AppProject[] = [
     status: 'Published',
     platform: 'App Store',
     link: 'https://apps.apple.com/app/fit4gymi/id6759988048',
-    localImageUrl: '/images/fit4gymi-logo.jpg',
-    localScreenshotUrl: '/images/fit4gymi-screenshot.png',
+    localImageUrl: fit4gymiLogoImg,
+    localScreenshotUrl: fit4gymiScreenshot,
     icon: 'GraduationCap'
   }
 ];
