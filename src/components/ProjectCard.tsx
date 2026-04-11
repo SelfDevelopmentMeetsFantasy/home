@@ -10,13 +10,15 @@ interface ProjectCardProps {
   index: number;
   onShowHappierPrivacy?: () => void;
   onShowFit4GymiPrivacy?: () => void;
+  isWide?: boolean;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ 
   project, 
   index, 
   onShowHappierPrivacy, 
-  onShowFit4GymiPrivacy 
+  onShowFit4GymiPrivacy,
+  isWide = false
 }) => {
   const [info, setInfo] = useState<AppInfo | null>(project.localImageUrl || project.localScreenshotUrl ? {
     logoUrl: project.localImageUrl,
@@ -89,19 +91,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <div 
-      className={`group flex flex-col h-full rounded-2xl border transition-all duration-300 overflow-hidden ${
+      className={`group flex flex-col ${isWide ? 'lg:flex-row' : ''} h-full rounded-2xl border transition-all duration-300 overflow-hidden ${
         project.featured 
           ? 'bg-white border-indigo-100 shadow-lg shadow-indigo-100/50' 
           : 'bg-white border-slate-200 hover:border-indigo-200 hover:shadow-md'
       }`}
     >
       {/* Screenshot Section */}
-      <div className="aspect-video w-full bg-slate-100 overflow-hidden relative">
+      <div className={`${isWide ? 'lg:w-3/5' : 'w-full'} aspect-video bg-slate-100 overflow-hidden relative ${project.id === 'fit4gymi' ? 'p-4 lg:p-8' : ''}`}>
         {info?.screenshotUrl && !screenshotError ? (
           <img 
             src={info.screenshotUrl} 
             alt={`${project.name} screenshot`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className={`w-full h-full ${project.id === 'fit4gymi' ? 'object-contain' : 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
             referrerPolicy="no-referrer"
             onError={handleScreenshotError}
           />
@@ -118,7 +120,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      <div className="p-5 flex-grow space-y-3 flex flex-col">
+      <div className={`p-5 flex-grow space-y-3 flex flex-col ${isWide ? 'lg:w-2/5 lg:p-8' : ''}`}>
         <div className="flex items-start justify-between">
           <div className={`overflow-hidden rounded-xl p-0.5 ${project.featured ? 'bg-indigo-50' : 'bg-slate-50'}`}>
             {loading ? (

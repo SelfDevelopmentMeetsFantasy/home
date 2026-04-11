@@ -10,6 +10,8 @@ import incompleteVersesImg from './assets/images/incomplete-verses.jpg';
 import versosIncompletosImg from './assets/images/versos-incompletos.jpg';
 import happierDecisionsLogoImg from './assets/images/happier-decisions-logo.jpg';
 import fit4gymiLogoImg from './assets/images/fit4gymi-logo.jpg';
+import happierBundleImg from './assets/images/happier-bundle.jpg';
+import fit4gymiScreenshot from './assets/images/fit4gymi-screenshot.png';
 
 // To add local screenshots:
 // 1. Place your screenshot images in src/assets/images/
@@ -84,7 +86,7 @@ export const PROJECTS: AppProject[] = [
     ],
     reviewLink: 'https://booksprout.co/reviewer/review-copy/view/269333/hopping-for-happiness-a-simple-framework-for-smarter-happier-decisions',
     localImageUrl: happierDecisionsLogoImg,
-    localScreenshotUrl: '/images/happier-bundle.jpg',
+    localScreenshotUrl: happierBundleImg,
     icon: 'BrainCircuit',
     featured: true
   },
@@ -97,7 +99,7 @@ export const PROJECTS: AppProject[] = [
     platform: 'App Store',
     link: 'https://apps.apple.com/app/fit4gymi/id6759988048',
     localImageUrl: fit4gymiLogoImg,
-    localScreenshotUrl: '/images/Fit4Gymi.PNG',
+    localScreenshotUrl: fit4gymiScreenshot,
     icon: 'GraduationCap'
   }
 ];
