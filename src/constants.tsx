@@ -17,14 +17,14 @@ export const AUTHOR_STORE_LINK = 'https://www.amazon.com/stores/author/B0GDGXQGQ
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    id: 'linkedin-post-1',
-    title: 'The Intersection of Self-Development and Fantasy',
-    description: 'Exploring how narrative structures in fantasy can help us frame our own personal growth journeys.',
-    date: 'April 10, 2026',
+    id: 'linkedin-post-happier-decisions',
+    title: 'Building the Future of Decision Making',
+    description: 'A look into how we are leveraging AI to help people make better, more informed choices in their daily lives.',
+    date: 'April 12, 2026',
     source: 'LinkedIn',
-    externalUrl: 'https://www.linkedin.com/posts/eduardo-j-aleman_selfdevelopment-fantasy-writing-activity-7184145678901234567-abcd',
-    embedUrl: 'https://www.linkedin.com/embed/feed/update/urn:li:share:7184145678901234567',
-    tags: ['Writing', 'Growth', 'Fantasy']
+    externalUrl: 'https://www.linkedin.com/posts/eduardo-j-aleman_happier-decisions-ai-activity-7441131886778728448',
+    htmlEmbed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7441131886778728448?collapsed=1" height="894" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>',
+    tags: ['AI', 'Innovation', 'LinkedIn']
   },
   {
     id: 'reddit-post-happier-decisions',

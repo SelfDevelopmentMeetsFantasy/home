@@ -44,7 +44,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onShowHappierPrivacy, onSh
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BLOG_POSTS.map((post) => (
+            {BLOG_POSTS.slice(0, 2).map((post) => (
               <BlogCard key={post.id} post={post} />
             ))}
           </div>

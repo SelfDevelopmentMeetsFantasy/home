@@ -33,10 +33,10 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <div className="group flex flex-col h-full rounded-2xl border border-slate-100 hover:bg-slate-50/50 transition-all duration-300 overflow-hidden bg-white shadow-sm hover:shadow-md">
       {/* Embed or Image Section */}
-      <div className="aspect-video w-full overflow-hidden bg-slate-100 relative">
+      <div className={`${post.htmlEmbed ? 'h-[400px]' : 'aspect-video'} w-full overflow-hidden bg-slate-100 relative`}>
         {post.htmlEmbed ? (
           <div 
-            className="w-full h-full overflow-auto p-2 bg-white flex items-center justify-center"
+            className="w-full h-full overflow-auto p-2 bg-white flex justify-center"
             dangerouslySetInnerHTML={{ __html: post.htmlEmbed }}
           />
         ) : post.embedUrl ? (

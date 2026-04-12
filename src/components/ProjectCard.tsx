@@ -102,14 +102,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
       <div className={`p-5 flex-grow space-y-3 flex flex-col ${isWide ? 'lg:w-2/5 lg:p-8' : ''}`}>
         <div className="flex items-center justify-between">
-          <span className={`text-[9px] font-bold uppercase tracking-tighter px-2 py-0.5 rounded-full ${
-            project.status === 'Published' 
-              ? 'bg-green-100 text-green-700' 
-              : 'bg-amber-100 text-amber-700'
-          }`}>
-            {project.status === 'In Progress' && <Clock size={8} className="inline mr-1" />}
-            {project.status}
-          </span>
+          {project.status !== 'Published' && (
+            <span className="text-[9px] font-bold uppercase tracking-tighter px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">
+              {project.status === 'In Progress' && <Clock size={8} className="inline mr-1" />}
+              {project.status}
+            </span>
+          )}
         </div>
         
         <div className="flex items-start justify-between">
