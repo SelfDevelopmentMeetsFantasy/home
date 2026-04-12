@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Book, AppProject } from './types';
-import { BookOpen, Smartphone, Zap, FlaskConical } from 'lucide-react';
+import { Book, AppProject, BlogPost } from './types';
+import { BookOpen, Smartphone, Zap, FlaskConical, Linkedin, MessageSquare } from 'lucide-react';
 
 // Import images from assets to ensure they are correctly bundled for production
 import hoppingForHappinessImg from './assets/images/hopping-for-happiness.jpg';
@@ -14,6 +14,29 @@ import happierBundleImg from './assets/images/happier-bundle.jpg';
 import fit4gymiScreenshot from './assets/images/fit4gymi-screenshot.png';
 
 export const AUTHOR_STORE_LINK = 'https://www.amazon.com/stores/author/B0GDGXQGQS/allbooks';
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 'linkedin-post-1',
+    title: 'The Intersection of Self-Development and Fantasy',
+    description: 'Exploring how narrative structures in fantasy can help us frame our own personal growth journeys.',
+    date: 'April 10, 2026',
+    source: 'LinkedIn',
+    externalUrl: 'https://www.linkedin.com/posts/eduardo-j-aleman_selfdevelopment-fantasy-writing-activity-7184145678901234567-abcd',
+    embedUrl: 'https://www.linkedin.com/embed/feed/update/urn:li:share:7184145678901234567',
+    tags: ['Writing', 'Growth', 'Fantasy']
+  },
+  {
+    id: 'reddit-post-happier-decisions',
+    title: 'Your new AI copilot for happier decisions',
+    description: 'Introducing the AI companion designed to help you navigate complex life choices with clarity and confidence.',
+    date: 'April 12, 2026',
+    source: 'Reddit',
+    externalUrl: 'https://www.reddit.com/r/GenAiApps/comments/1sesm4t/your_new_ai_copilot_for_happier_decisions/',
+    htmlEmbed: '<blockquote class="reddit-embed-bq" style="height:316px" data-embed-height="316"><a href="https://www.reddit.com/r/GenAiApps/comments/1sesm4t/your_new_ai_copilot_for_happier_decisions/">Your new AI copilot for happier decisions</a><br> by <a href="https://www.reddit.com/user/BooksandAppsbyEJA/">u/BooksandAppsbyEJA</a> in <a href="https://www.reddit.com/r/GenAiApps/">GenAiApps</a></blockquote>',
+    tags: ['AI', 'Productivity', 'Tech']
+  }
+];
 
 export const BOOKS: Book[] = [
   {

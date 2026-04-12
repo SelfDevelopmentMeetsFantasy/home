@@ -24,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onGoHome }) => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
+            <a href="#blog" className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Blog</a>
             <a href="#happiness" className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Happiness</a>
             <a href="#gymivorbereitung" className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Gymivorbereitung</a>
             <a href="#fantasy" className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Fantasy</a>

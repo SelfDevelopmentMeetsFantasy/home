@@ -41,3 +41,17 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
 }
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  source: 'LinkedIn' | 'Reddit' | 'Medium' | 'Other';
+  embedUrl?: string;
+  htmlEmbed?: string;
+  externalUrl: string;
+  imageUrl?: string;
+  localImageUrl?: string;
+  tags: string[];
+}

@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { BOOKS, PROJECTS } from '../constants';
+import { BOOKS, PROJECTS, BLOG_POSTS } from '../constants';
 import { BookCard } from './BookCard';
 import { ProjectCard } from './ProjectCard';
-import { Sparkles, GraduationCap, Sword } from 'lucide-react';
+import { BlogCard } from './BlogCard';
+import { Sparkles, GraduationCap, Sword, Newspaper } from 'lucide-react';
 
 interface PortfolioProps {
   onShowHappierPrivacy: () => void;
@@ -11,19 +12,17 @@ interface PortfolioProps {
 }
 
 export const Portfolio: React.FC<PortfolioProps> = ({ onShowHappierPrivacy, onShowFit4GymiPrivacy }) => {
-  // Happiness Section: Happier Decisions (combined app and book)
+  // ... existing logic ...
   const happinessItems = {
     apps: PROJECTS.filter(p => p.id === 'happier-decisions'),
     books: []
   };
 
-  // Gymivorbereitung Section: Fit4Gymi (app)
   const gymiItems = {
     apps: PROJECTS.filter(p => p.id === 'fit4gymi'),
     books: []
   };
 
-  // Fantasy Section: Thousandfold Tide, Incomplete Verses, Versos Incompletos
   const fantasyItems = {
     apps: [],
     books: BOOKS.filter(b => ['thousandfold-tide', 'incomplete-verses', 'versos-incompletos'].includes(b.id))
@@ -31,6 +30,27 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onShowHappierPrivacy, onSh
 
   return (
     <div className="space-y-24 py-24">
+      {/* Blog Section */}
+      <section id="blog" className="scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center space-x-4 mb-12 border-b border-slate-100 pb-8">
+            <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
+              <Newspaper size={24} />
+            </div>
+            <div>
+              <h2 className="serif text-4xl font-bold text-slate-900">Blog & Insights</h2>
+              <p className="text-slate-500 font-medium">Thoughts on writing, AI, and personal growth</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {BLOG_POSTS.map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Happiness Section */}
       <section id="happiness" className="scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

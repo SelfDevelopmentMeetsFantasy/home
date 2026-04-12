@@ -42,6 +42,12 @@ export const Hero: React.FC = () => {
               <span>Explore My Library</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
             </a>
+            <a 
+              href="#blog"
+              className="group w-full sm:w-auto flex items-center justify-center space-x-3 bg-white text-slate-900 border-2 border-slate-200 px-10 py-4 rounded-2xl font-bold hover:bg-slate-50 transition-all active:scale-95"
+            >
+              <span>Read the Blog</span>
+            </a>
           </div>
         </div>
       </div>
